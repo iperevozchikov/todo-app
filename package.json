@@ -23,6 +23,8 @@
         "@angular/platform-browser-dynamic": "~7.0.0",
         "@angular/router": "~7.0.0",
         "core-js": "^2.5.4",
+        "firebase": "^5.5.6",
+        "rxfire": "^3.0.8",
         "rxjs": "~6.3.3",
         "tachyons": "^4.10.0",
         "zone.js": "~0.8.26"
