@@ -7,7 +7,8 @@ export const environment = {
         projectId: "todoapp-bw",
         storageBucket: "todoapp-bw.appspot.com",
         messagingSenderId: "983872583803"
-    }
+    },
+    hmr: true
 };
 
 /*
