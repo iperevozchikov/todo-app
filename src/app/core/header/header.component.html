@@ -1,0 +1,13 @@
+<mat-toolbar class="justify-between v-mid" *ngIf="isLoggedIn | async">
+    <span><img src="assets/images/logo/48.png" class="v-mid"> TodoApp</span>
+
+    <span>
+        <button mat-button [matMenuTriggerFor]="menu">
+            <img class="w-30px h-30px v-mid br-100 mr2" src="{{ userAvatar }}"> {{ userName }}
+        </button>
+
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="logout()">Exit</button>
+        </mat-menu>
+    </span>
+</mat-toolbar>
