@@ -90,6 +90,10 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "todo-app:build:production"
+                        },
+                        "dev": {
+                            "hmr": true,
+                            "browserTarget": "todo-app:build:dev"
                         }
                     }
                 },
