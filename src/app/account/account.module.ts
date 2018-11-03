@@ -12,7 +12,6 @@ import { AccountRoutingModule } from './account-routing.module';
     imports: [
         CommonModule,
         AccountRoutingModule,
-        MatSnackBarModule,
         MatCardModule,
         MatButtonModule
     ],

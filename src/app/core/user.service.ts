@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/auth';
-import { ReplaySubject } from 'rxjs';
 import { User } from 'firebase';
+import { ReplaySubject } from 'rxjs';
+
 
 @Injectable()
 export class UserService {
@@ -22,8 +23,7 @@ export class UserService {
     }
 
     async login(provider: firebase.auth.AuthProvider): Promise<void> {
-        const userCredentials = await this.fireAuth.auth.signInWithPopup(provider);
-        console.log(userCredentials);
+        await this.fireAuth.auth.signInWithPopup(provider);
     }
 
     async logout(): Promise<void> {
