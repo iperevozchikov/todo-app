@@ -1,0 +1,49 @@
+<div class="fl w-100 w-25-ns pa2">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <button class="absolute-imp right-0 top-5px" mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <mat-menu #menu="matMenu">
+                    <ng-container [ngSwitch]="item.state">
+                        <button mat-menu-item (click)="archive()" *ngSwitchCase="'active'">
+                            <mat-icon>folder</mat-icon>
+                            <span>Send to archive</span>
+                        </button>
+
+                        <button mat-menu-item (click)="activate()" *ngSwitchCase="'archived'">
+                            <mat-icon>assignment_return</mat-icon>
+                            <span>Return from archive</span>
+                        </button>
+                    </ng-container>
+                    <button mat-menu-item (click)="delete()">
+                        <mat-icon>delete_forever</mat-icon>
+                        <span>Delete</span>
+                    </button>
+                </mat-menu>
+
+                {{ item?.title }}
+            </mat-card-title>
+            <mat-card-subtitle>
+                <span>{{ item?.updatedAt?.toDate() | dateTimeFromJsDate | dateTimeToFormat:'MMMM d, yyyy HH:mm' }}</span>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="min-h-250px max-h-250px overflow-hidden">
+            <ng-container *ngIf="item?.checkList?.length < 1">
+            </ng-container>
+
+            <mat-list role="list">
+                <mat-list-item *ngFor="let checkListItem of item.checkList">
+                    <span [class.strike]="checkListItem?.done">
+                        {{ checkListItem?.title }}
+                    </span>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="viewDetails()">View</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
