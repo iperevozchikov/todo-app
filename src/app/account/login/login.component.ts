@@ -10,20 +10,17 @@ import { UserService } from '../../core/user.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './login.component.html'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
     constructor(private userService: UserService,
                 private snackBar: MatSnackBar,
                 private router: Router) {}
 
-    async ngOnInit(): Promise<void> {
-        this.userService.isLoggedIn.subscribe(val => console.log(val));
-    }
-
     async login(): Promise<void> {
         try {
             await this.userService.login(new auth.GoogleAuthProvider());
+            this.router.navigateByUrl('');
         } catch (err) {
-            this.snackBar.open('Error');
+            this.snackBar.open('Error: ' + err.message);
         }
     }
 }
