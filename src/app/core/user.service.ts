@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/auth';
 import { User } from 'firebase';
+import { auth } from 'firebase/auth';
 import { ReplaySubject } from 'rxjs';
-
 
 @Injectable()
 export class UserService {
