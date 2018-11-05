@@ -7,6 +7,7 @@
         <mat-slide-toggle #hasPublicAccess
                           class="w-100 ph-15px mt-20px"
                           formControlName="hasPublicAccess"
+                          [disabled]="!isOwner"
                           color="primary">
             <span>Allow public access</span>
         </mat-slide-toggle>
@@ -23,6 +24,16 @@
 
         <div class="mt-20px">
             <td-checklist-select formControlName="checkList"></td-checklist-select>
+        </div>
+
+        <div class="mt-20px">
+            <button class="mr-10px-imp"
+                    mat-raised-button
+                    color="primary"
+                    [disabled]="form.untouched"
+                    (click)="save()">Save</button>
+
+            <a mat-raised-button routerLink="/notes">Back</a>
         </div>
     </form>
 </div>
