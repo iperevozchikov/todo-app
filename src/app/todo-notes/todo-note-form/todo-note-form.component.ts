@@ -57,12 +57,6 @@ export class TodoNoteFormComponent implements OnInit {
             .subscribe(this.note);
 
         this.note.subscribe((note: TodoNote) => {
-            if (!note) {
-                this.router.navigateByUrl('error/page-not-found');
-
-                return;
-            }
-
             this.form.patchValue({
                 title: note.title,
                 checkList: note.checkList,
