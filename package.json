@@ -27,6 +27,7 @@
         "firebase": "^5.5.6",
         "luxon": "^1.4.5",
         "luxon-angular": "^0.6.0",
+        "ngx-clipboard": "^11.1.9",
         "rxjs": "~6.3.3",
         "tachyons": "^4.10.0",
         "zone.js": "~0.8.26"
