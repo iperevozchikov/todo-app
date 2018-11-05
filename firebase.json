@@ -1,0 +1,46 @@
+{
+    "hosting": {
+        "public": "dist/todo-app",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+        "rewrites": [
+            {
+                "source": "favicon.png",
+                "destination": "/favicon.png"
+            },
+            {
+                "source": "**",
+                "destination": "/index.html"
+            }
+        ],
+        "headers": [
+            {
+                "source" : "**/*.@(eot|otf|ttf|ttc|woff|font.css)",
+                "headers" : [
+                    {
+                        "key" : "Access-Control-Allow-Origin",
+                        "value" : "*"
+                    }
+                ]
+            },
+            {
+                "source" : "**/*.@(jpg|jpeg|gif|png)",
+                "headers" : [
+                    {
+                        "key" : "Cache-Control",
+                        "value" : "max-age=7200"
+                    }
+                ]
+            }
+        ],
+        "cleanUrls": true,
+        "trailingSlash": false
+    },
+    "firestore": {
+        "rules": "firestore.rules",
+        "indexes": "firestore.indexes.json"
+    }
+}
