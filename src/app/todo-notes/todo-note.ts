@@ -16,6 +16,7 @@ export class TodoNote extends Object {
     userId: string | null = null;
     title: string = '';
     checkList: Array<CheckItem> = [];
+    hasPublicAccess: boolean = true;
     state: TodoNoteState = TodoNoteState.active;
     createdAt: any = Timestamp.fromDate(new Date());
     updatedAt: any = Timestamp.fromDate(new Date());
