@@ -9,7 +9,7 @@ import {
 import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatInput } from '@angular/material';
 
-import { CheckItem } from '../todo-note';
+import { CheckItem } from '../../todo-note';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,7 +28,7 @@ export class ChecklistSelectComponent implements OnInit, ControlValueAccessor {
 
     checkList: Array<CheckItem> = [];
 
-    private onTouchedCallback: () => void;
+    private onTouchedCallback: (event?: any) => void;
 
     private onChangeCallback: (items: Array<CheckItem>) => void;
 
@@ -103,5 +103,6 @@ export class ChecklistSelectComponent implements OnInit, ControlValueAccessor {
     private detectChanges(): void {
         this.cdr.markForCheck();
         this.onChangeCallback(this.checkList);
+        this.onTouchedCallback();
     }
 }
