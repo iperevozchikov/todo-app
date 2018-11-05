@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { User, firestore } from 'firebase';
 const Timestamp = firestore.Timestamp;
 
@@ -16,39 +16,6 @@ export class TodoNoteService {
 
     constructor(private userService: UserService,
                 private db: AngularFirestore) {}
-
-    async initializeMockCollection(size: number = 10): Promise<void> {
-        console.log('start initializing collection');
-        const randNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min;
-
-        const { uid } = await observableToPromise(this.userService.user);
-        console.log('user uid=' + uid);
-
-        const notes = [];
-
-        for (let i = 0; i < size; i++) {
-            const note: TodoNote = new TodoNote();
-
-            note.id = this.db.createId();
-            note.title = `Simple title ${i}`;
-            note.checkList = Array(randNumber(1, 20))
-                .fill(0)
-                .map((value, index) => ({ title: `TODO item ${index}`, done: !!randNumber(0, 2) }));
-
-            note.userId = uid;
-
-
-            notes.push(note);
-        }
-
-        while(notes.length > 0) {
-            const group = notes.splice(0, 10);
-
-            await Promise.all(group.map(note => this.addTodoNote(note)));
-        }
-
-        console.log('collection has been initialized');
-    }
 
     async addTodoNote(note: TodoNote): Promise<string> {
         if (!note.id) {
@@ -101,20 +68,33 @@ export class TodoNoteService {
             );
     }
 
-    getObservableTodoNoteById(noteId: string): Observable<TodoNote> {
+    getTodoNoteChanges(noteId: string): Observable<TodoNote | undefined> {
         return this.collection
+            .doc(noteId)
+            .valueChanges()
+            .pipe(filter(Boolean));
+    }
+
+    getTodoNoteById(noteId: string): Promise<TodoNote> {
+        const observable = this.collection
             .doc(noteId)
             .get()
             .pipe(
                 map(snapshot => snapshot.data() as TodoNote)
             );
+
+        return observableToPromise(observable);
     }
 
     async hasUserAccessToTodoNote(uid: string, noteId: string): Promise<boolean> {
-        const { userId, hasPublicAccess } = await observableToPromise(this.getObservableTodoNoteById(noteId));
+        const { userId, hasPublicAccess } = await this.getTodoNoteById(noteId);
 
         return uid === userId
             ? true
             : hasPublicAccess;
+    }
+
+    async hasTodoNoteExists(noteId: string): Promise<boolean> {
+        return !!await this.getTodoNoteById(noteId);
     }
 }

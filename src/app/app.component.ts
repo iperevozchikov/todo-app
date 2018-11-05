@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TodoNoteService } from './todo-notes/todo-note.service';
+
 import { NetworkService } from './core/network.service';
 
 @Component({
@@ -7,11 +7,9 @@ import { NetworkService } from './core/network.service';
     templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit, OnDestroy {
-    constructor(private todoService: TodoNoteService,
-                private networkService: NetworkService) {}
+    constructor(private networkService: NetworkService) {}
 
     ngOnInit(): void {
-        //this.todoService.initializeMockCollection();
         this.networkService.observeNetworkState();
     }
 
@@ -19,4 +17,3 @@ export class AppComponent implements OnInit, OnDestroy {
         this.networkService.stopObservingNetworkState();
     }
 }
-
