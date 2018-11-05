@@ -43,8 +43,4 @@ export class TodoNoteListItemComponent {
             this.snackBar.open('Error: ' + err.message);
         }
     }
-
-    viewDetails(): void {
-        this.router.navigateByUrl(`/notes/note/${this.item.id}`);
-    }
 }
