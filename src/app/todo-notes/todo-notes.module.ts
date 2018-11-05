@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import {
     MatCardModule,
-    MatCheckboxModule,
+    MatCheckboxModule, MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
-    MatMenuModule,
+    MatMenuModule, MatSelectModule,
     MatSlideToggleModule,
 } from '@angular/material';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -18,8 +18,9 @@ import { TodoNotesRoutingModule } from './todo-notes-routing.module';
 import { TodoNoteListComponent } from './todo-note-list/todo-note-list.component';
 import { TodoNoteListItemComponent } from './todo-note-list/todo-note-list-item/todo-note-list-item.component';
 import { TodoNoteFormComponent } from './todo-note-form/todo-note-form.component';
-import { ChecklistSelectComponent } from './todo-note-form/checklist-select.component';
+import { ChecklistSelectComponent } from './todo-note-form/checklist-select/checklist-select.component';
 import { SharedModule } from '../shared/shared.module';
+import { ConflictDialogComponent } from './todo-note-form/conflict-dialog/conflict-dialog.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,11 @@ import { SharedModule } from '../shared/shared.module';
         TodoNoteListComponent,
         TodoNoteListItemComponent,
         TodoNoteFormComponent,
-        ChecklistSelectComponent
+        ChecklistSelectComponent,
+        ConflictDialogComponent
+    ],
+    entryComponents: [
+        ConflictDialogComponent
     ],
     imports: [
         SharedModule,
@@ -39,6 +44,8 @@ import { SharedModule } from '../shared/shared.module';
         MatInputModule,
         MatSlideToggleModule,
         MatCheckboxModule,
+        MatDialogModule,
+        MatSelectModule,
         LuxonModule,
         ClipboardModule,
         TodoNotesRoutingModule
