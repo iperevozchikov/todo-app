@@ -1,6 +1,9 @@
+import { Router } from '@angular/router';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
+
 import { UserService } from '../user.service';
-import { ReplaySubject } from 'rxjs';
+import { NetworkService } from '../network.service';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -9,11 +12,28 @@ import { ReplaySubject } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
     isLoggedIn: ReplaySubject<boolean> = this.userService.isLoggedIn;
+
+    offlineEnabled: BehaviorSubject<boolean> = this.networkService.offlineMode;
+
     userAvatar: string;
+
     userName: string;
 
-    constructor(private userService: UserService,
-                private cdr: ChangeDetectorRef) {}
+    mainMenuItems = [
+        {
+            label: 'Active notes',
+            link: '/notes'
+        },
+        {
+            label: 'Archived notes',
+            link: '/notes/archived'
+        }
+    ];
+
+    constructor(private cdr: ChangeDetectorRef,
+                private userService: UserService,
+                private networkService: NetworkService,
+                private router: Router) {}
 
     async ngOnInit(): Promise<void> {
         this.userService
@@ -26,7 +46,8 @@ export class HeaderComponent implements OnInit {
             });
     }
 
-    logout(): void {
-        this.userService.logout();
+    async logout(): Promise<void> {
+        await this.userService.logout();
+        this.router.navigateByUrl('login');
     }
 }
