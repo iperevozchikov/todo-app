@@ -117,4 +117,8 @@ export class TodoNoteService {
             ? true
             : hasPublicAccess;
     }
+
+    async hasTodoNoteExists(noteId: string): Promise<boolean> {
+        return !!await observableToPromise(this.getObservableTodoNoteById(noteId));
+    }
 }
