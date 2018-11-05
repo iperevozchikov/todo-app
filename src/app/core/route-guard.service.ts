@@ -24,6 +24,12 @@ export class RouteGuardService implements CanActivate, CanActivateChild {
         if (activatedUrl.includes('/note/') && route.params['id'] !== 'create' && isLoggedIn) {
             const { uid } = await observableToPromise(this.userService.user);
 
+            if (!await this.todoService.hasTodoNoteExists(route.params['id'])) {
+                this.router.navigateByUrl('error/page-not-found');
+
+                return false;
+            }
+
             if (!await this.todoService.hasUserAccessToTodoNote(uid, route.params['id'])) {
                 this.router.navigateByUrl('error/restricted-access');
                 return false;
