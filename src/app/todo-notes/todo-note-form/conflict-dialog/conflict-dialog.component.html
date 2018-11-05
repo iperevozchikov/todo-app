@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Conflict resolving</h1>
+<div mat-dialog-content>
+    <mat-form-field class="w-100 db">
+        <mat-select placeholder="Select resolving strategy"
+                    [(value)]="strategy">
+            <mat-option *ngFor="let strategyOption of strategyOptions"
+                        [value]="strategyOption?.value">{{ strategyOption?.label }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <ng-container *ngIf="strategy === 'custom'">
+        <mat-form-field class="w-100 db">
+            <mat-select placeholder='Select strategy to field "Title"'
+                        [(value)]="strategyByFields['title']">
+                <mat-option *ngFor="let titleStrategyOption of titleStrategyOptions"
+                            [value]="titleStrategyOption?.value">{{ titleStrategyOption?.label }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="w-100 db">
+            <mat-select placeholder='Select strategy to field "Check list"'
+                        [(value)]="strategyByFields['checkList']">
+                <mat-option *ngFor="let clStrategyOption of checkListStrategyOptions"
+                            [value]="clStrategyOption?.value">{{ clStrategyOption?.label }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </ng-container>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="resolveStrategy" cdkFocusInitial>Apply</button>
+    <button mat-button (click)="cancel()">Cancel</button>
+</div>
