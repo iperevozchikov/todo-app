@@ -1,0 +1,30 @@
+<mat-list class="w-100">
+    <mat-list-item *ngFor="let checkListItem of checkList; let i = index">
+        <span class="w-90">
+            <ng-container *ngIf="checkListItem.done">
+                <span class="strike">{{ checkListItem?.title }}</span>
+            </ng-container>
+
+            <input *ngIf="!checkListItem.done"
+                   matInput
+                   type="text"
+                   [value]="checkListItem?.title"
+                   (keydown)="keydownDispatcher(i, $event)">
+        </span>
+        <span class="absolute top-5px right-5px">
+            <mat-checkbox color="primary"
+                          [checked]="checkListItem.done"
+                          (change)="toggleDoneItem(i)"></mat-checkbox>
+            <button mat-icon-button (click)="removeItem(i)">
+                <mat-icon aria-label="Delete todo task">clear</mat-icon>
+            </button>
+        </span>
+    </mat-list-item>
+</mat-list>
+
+<mat-action-list>
+    <button class="mat-raised-button mat-primary" mat-list-item (click)="appendItem()">
+        <span class="white w-100 tc">Add new todo task</span>
+    </button>
+
+</mat-action-list>
