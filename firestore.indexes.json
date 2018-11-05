@@ -1,0 +1,21 @@
+{
+    "indexes": [
+        {
+            "collectionId": "todo-notes",
+            "fields": [
+                {
+                    "fieldPath": "userId",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "state",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "updatedAt",
+                    "mode": "DESCENDING"
+                }
+            ]
+        }
+    ]
+}
