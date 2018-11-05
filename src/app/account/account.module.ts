@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatCardModule, MatSnackBarModule } from '@angular/material';
+import { MatCardModule } from '@angular/material';
 
 import { LoginComponent } from './login/login.component';
 import { AccountRoutingModule } from './account-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     declarations: [
         LoginComponent
     ],
     imports: [
-        CommonModule,
+        SharedModule,
         AccountRoutingModule,
         MatCardModule,
-        MatButtonModule
     ],
 })
 export class AccountModule {
