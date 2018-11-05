@@ -1,39 +1,46 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
-    MatButtonModule,
     MatCardModule,
-    MatIconModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatSnackBarModule
+    MatSlideToggleModule,
 } from '@angular/material';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ClipboardModule } from 'ngx-clipboard';
+import { LuxonModule } from 'luxon-angular';
 
 import { TodoNoteService } from './todo-note.service';
 import { TodoNotesComponent } from './todo-notes.component';
 import { TodoNotesRoutingModule } from './todo-notes-routing.module';
 import { TodoNoteListComponent } from './todo-note-list/todo-note-list.component';
 import { TodoNoteListItemComponent } from './todo-note-list/todo-note-list-item/todo-note-list-item.component';
-import { LuxonModule } from 'luxon-angular';
-
+import { TodoNoteFormComponent } from './todo-note-form/todo-note-form.component';
+import { ChecklistSelectComponent } from './todo-note-form/checklist-select.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     declarations: [
         TodoNotesComponent,
         TodoNoteListComponent,
-        TodoNoteListItemComponent
+        TodoNoteListItemComponent,
+        TodoNoteFormComponent,
+        ChecklistSelectComponent
     ],
     imports: [
-        CommonModule,
+        SharedModule,
         ScrollingModule,
-        MatSnackBarModule,
         MatCardModule,
-        MatButtonModule,
         MatListModule,
         MatMenuModule,
-        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSlideToggleModule,
+        MatCheckboxModule,
         LuxonModule,
+        ClipboardModule,
         TodoNotesRoutingModule
     ],
     providers: [

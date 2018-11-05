@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { User, firestore } from 'firebase';
 const Timestamp = firestore.Timestamp;
 
@@ -12,10 +12,10 @@ import { observableToPromise } from '../shared/helpers/observable-to-promise';
 @Injectable()
 export class TodoNoteService {
     private readonly collectionName: string = 'todo-notes';
+    private readonly collection: AngularFirestoreCollection<TodoNote> = this.db.collection(this.collectionName);
 
     constructor(private userService: UserService,
-                private db: AngularFirestore) {
-    }
+                private db: AngularFirestore) {}
 
     async initializeMockCollection(size: number = 10): Promise<void> {
         console.log('start initializing collection');
@@ -37,6 +37,7 @@ export class TodoNoteService {
 
             note.userId = uid;
 
+
             notes.push(note);
         }
 
@@ -49,35 +50,39 @@ export class TodoNoteService {
         console.log('collection has been initialized');
     }
 
-    addTodoNote(note: TodoNote): Promise<void> {
-        return this.db.collection(this.collectionName).doc(note.id).set(note);
+    async addTodoNote(note: TodoNote): Promise<string> {
+        if (!note.id) {
+            note.id = this.db.createId();
+        }
+
+        await this.collection.doc(note.id).set(note);
+
+        return note.id;
     }
 
-    async updateTodoNote(note: Partial<TodoNote>): Promise<void> {
-        if (!('updatedAt' in note)) {
+    updateTodoNote(noteId: string, note: Partial<TodoNote>): Promise<void> {
+        if (!note['updatedAt']) {
             note['updatedAt'] = Timestamp.fromDate(new Date());
         }
-        await this.db.doc(`${this.collectionName}/${note.id}`).update(note);
+
+        return this.collection.doc(noteId).update(note);
     }
 
     deleteTodoNote(noteId: string): Promise<void> {
-        return this.updateTodoNote({
-            id: noteId,
+        return this.updateTodoNote(noteId, {
             state: TodoNoteState.deleted,
             deletedAt: Timestamp.fromDate(new Date())
         });
     }
 
     archiveTodoNote(noteId: string): Promise<void> {
-        return this.updateTodoNote({
-            id: noteId,
+        return this.updateTodoNote(noteId, {
             state: TodoNoteState.archived
         });
     }
 
     activateTodoNote(noteId: string): Promise<void> {
-        return this.updateTodoNote({
-            id: noteId,
+        return this.updateTodoNote(noteId, {
             state: TodoNoteState.active
         });
     }
@@ -87,12 +92,29 @@ export class TodoNoteService {
             .user
             .pipe(
                 switchMap((user: User) => this.db.collection<TodoNote>(
-                    this.collectionName,
+                    this.collection.ref,
                     ref => ref
                         .where('userId', '==', user.uid)
                         .where('state', '==', state)
-                        .orderBy('updatedAt')
+                        .orderBy('updatedAt', 'desc')
                 ).valueChanges()),
             );
+    }
+
+    getObservableTodoNoteById(noteId: string): Observable<TodoNote> {
+        return this.collection
+            .doc(noteId)
+            .get()
+            .pipe(
+                map(snapshot => snapshot.data() as TodoNote)
+            );
+    }
+
+    async hasUserAccessToTodoNote(uid: string, noteId: string): Promise<boolean> {
+        const { userId, hasPublicAccess } = await observableToPromise(this.getObservableTodoNoteById(noteId));
+
+        return uid === userId
+            ? true
+            : hasPublicAccess;
     }
 }

@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +13,7 @@ import { CoreModule } from './core/core.module';
 import { environment } from '../environments/environment';
 import { AccountModule } from './account/account.module';
 import { TodoNotesModule } from './todo-notes/todo-notes.module';
+import { ErrorModule } from './error/error.module';
 
 @NgModule({
     declarations: [
@@ -26,12 +27,12 @@ import { TodoNotesModule } from './todo-notes/todo-notes.module';
         AngularFireAuthModule,
         AngularFireDatabaseModule,
         AngularFirestoreModule.enablePersistence(),
-        MatSnackBarModule,
 
         // Internal modules
         CoreModule,
         AccountModule,
         TodoNotesModule,
+        ErrorModule,
         AppRoutingModule,
     ],
     providers: [

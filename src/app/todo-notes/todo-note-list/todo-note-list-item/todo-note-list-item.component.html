@@ -1,7 +1,7 @@
 <div class="fl w-100 w-25-ns pa2">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>
+            <mat-card-title class="min-h-23px max-w-240px truncate ml-20px-n">
                 <button class="absolute-imp right-0 top-5px" mat-icon-button [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
@@ -24,10 +24,17 @@
                     </button>
                 </mat-menu>
 
+                <mat-icon class="fs-14px w-14px-imp"
+                          [matTooltip]="item.hasPublicAccess ? 'Note visible for everyone, who has direct link' : 'Note visible only for you'">
+                    {{ item.hasPublicAccess ? 'lock_open' : 'lock' }}
+                </mat-icon>
+
                 {{ item?.title }}
             </mat-card-title>
             <mat-card-subtitle>
-                <span>{{ item?.updatedAt?.toDate() | dateTimeFromJsDate | dateTimeToFormat:'MMMM d, yyyy HH:mm' }}</span>
+                <span>
+                    {{ item?.updatedAt?.toDate() | dateTimeFromJsDate | dateTimeToFormat:'MMMM d, yyyy HH:mm' }}
+                </span>
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content class="min-h-250px max-h-250px overflow-hidden">
@@ -43,7 +50,7 @@
             </mat-list>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="viewDetails()">View</button>
+            <a mat-raised-button color="primary" [routerLink]="'/notes/note/' + item.id">View</a>
         </mat-card-actions>
     </mat-card>
 </div>

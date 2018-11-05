@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
     { path: '', redirectTo: 'notes', pathMatch: 'full' },
+    { path: '**', redirectTo: 'error/page-not-found' }
 ];
 
 @NgModule({
