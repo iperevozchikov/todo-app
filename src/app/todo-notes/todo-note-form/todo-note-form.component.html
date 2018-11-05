@@ -1,0 +1,28 @@
+<div class="ph5 pv3 w-100">
+    <form [formGroup]="form">
+        <mat-form-field class="w-100 ph-15px">
+            <input matInput formControlName="title" type="text" placeholder="Task title"/>
+        </mat-form-field>
+
+        <mat-slide-toggle #hasPublicAccess
+                          class="w-100 ph-15px mt-20px"
+                          formControlName="hasPublicAccess"
+                          color="primary">
+            <span>Allow public access</span>
+        </mat-slide-toggle>
+
+        <mat-form-field *ngIf="hasPublicAccess.checked" class="w-100 ph-15px mt-20px">
+            <input matInput
+                   formControlName="title"
+                   type="url"
+                   placeholder="Access URL"
+                   [value]="getPublicAccessUrl()"
+                   readonly />
+            <button class="absolute-imp right-5px top-10px-n" mat-raised-button (click)="copyAccessUrl()">Copy</button>
+        </mat-form-field>
+
+        <div class="mt-20px">
+            <td-checklist-select formControlName="checkList"></td-checklist-select>
+        </div>
+    </form>
+</div>
