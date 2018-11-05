@@ -2,14 +2,14 @@
     <td-todo-note-list [items]="notes | async"></td-todo-note-list>
 </div>
 
-<div class="tc center mt-70px" *ngIf="!(notes | async).length">
+<div class="tc center mt-70px" *ngIf="(notes | async) !== null && (notes | async)?.length < 1">
     <img src="assets/images/no-items-256.png">
-    <span class="db fs-20px fw6 ttu light-silver">You doesn't have any created reports</span>
+    <span class="db fs-20px fw6 ttu light-silver">You doesn't have any todo notes</span>
 </div>
 
-
-<div class="fixed bottom-1 right-1">
-    <button mat-fab color="primary" (click)="add()">
+<div *ngIf="!(archived | async)"
+     class="fixed bottom-1 right-1">
+    <a mat-fab color="primary" routerLink="/notes/note/create">
         <mat-icon>add</mat-icon>
-    </button>
+    </a>
 </div>
