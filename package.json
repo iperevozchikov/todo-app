@@ -3,11 +3,14 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
-        "build": "ng build",
+        "firebase": "firebase",
+        "start": "ng serve --hmr --configuration=development",
+        "build": "ng build --configuration=production",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "deploy": "firebase deploy",
+        "login": "firebase login"
     },
     "private": true,
     "dependencies": {
@@ -43,6 +46,7 @@
         "@types/luxon": "^1.4.0",
         "@types/node": "~8.9.4",
         "codelyzer": "~4.5.0",
+        "firebase-tools": "^6.0.1",
         "jasmine-core": "~2.99.1",
         "jasmine-spec-reporter": "~4.2.1",
         "karma": "~3.0.0",
