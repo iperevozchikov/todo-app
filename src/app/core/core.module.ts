@@ -1,25 +1,25 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatMenuModule, MatToolbarModule } from '@angular/material';
+import { MatMenuModule, MatToolbarModule } from '@angular/material';
 
-import { RouteGuardService } from './route-guard/route-guard.service';
+import { RouteGuardService } from './route-guard.service';
 import { UserService } from './user.service';
 import { HeaderComponent } from './header/header.component';
-
+import { NetworkService } from './network.service';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     imports: [
-        CommonModule,
+        SharedModule,
         MatToolbarModule,
         MatMenuModule,
-        MatButtonModule
     ],
     declarations: [
         HeaderComponent
     ],
     providers: [
         RouteGuardService,
-        UserService
+        UserService,
+        NetworkService
     ],
     exports: [
         HeaderComponent
